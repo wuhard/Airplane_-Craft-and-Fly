@@ -3,27 +3,36 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="keywords" content="Adventure Games, Arcade Games, Girls Games, Shooting Games, Racing Games">
-        <meta name="description" content="">
         <meta name="format-detection" content="telephone=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <style>
-        body,html{padding:0;border:0;margin:0;height:100%;width:100%}#div_iframe_game{height:100%;width:100%;position:absolute;left:0;top:0}#iframe_game{width:100%}#ad-banner{width:100%;z-index:999;justify-content:center;display:flex;position:absolute}.loadingMc{margin:auto;width:100%;height:100%;z-index:99;position:absolute;background:#2596be}.gameIconPanret{width:140px;height:140px;border-radius:100%;overflow:hidden;position:absolute;top:50%;left:50%;margin-top:-70px;margin-left:-70px;z-index:99} .gameIcon{width:100%} .loadNumPanret{width:140px;height:140px;position:absolute;top:50%;left:50%;margin-top:100px;z-index:99}.loadMc{width:140px;height:140px;position:absolute;top:50%;left:50%;margin-top:-75px;margin-left:-75px;z-index:99;border-radius:50%;border:5px solid #FFFFF0;border-top:5px solid #08da4e;animation:load 2s linear infinite}@keyframes load{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+        body,html{padding:0;border:0;margin:0;height:100%;width:100%}#div_iframe_game{height:100%;width:100%;position:absolute;left:0;top:0}#iframe_game{width:100%}#game_banner{width:100%;z-index:999;justify-content:center;display:flex;position:absolute}.loadingMc{margin:auto;width:100%;height:100%;z-index:99;position:absolute;background:#2596be}.gameIconPanret{width:140px;height:140px;border-radius:100%;overflow:hidden;position:absolute;top:50%;left:50%;margin-top:-70px;margin-left:-70px;z-index:99} .gameIcon{width:100%} .loadNumPanret{width:140px;height:140px;position:absolute;top:50%;left:50%;margin-top:100px;z-index:99}.loadMc{width:140px;height:140px;position:absolute;top:50%;left:50%;margin-top:-75px;margin-left:-75px;z-index:99;border-radius:50%;border:5px solid #FFFFF0;border-top:5px solid #08da4e;animation:load 2s linear infinite}@keyframes load{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
         </style>
         <title></title>
-
-
-        <script src="https://cdn.jsdelivr.net/npm/@jolibox/sdk@1/dist/index.iife.js"></script>
-
         <script type="text/javascript">
-            var gGame = {                   
-                name: "Zoo_Boom",
-                url:"./game.html",
-                icon:"./icon.jpg",
-				isBanner:false,
-            }; 
-            window.isUploadCY = !1;
-            </script>
+                var gGame = {    
+                    data_ad_client:"ca-pub-1394526330842049",
+                    data_ad_channel:"6206130407" ,       
+                    name: "ChristmasJigsawPuzzles",
+                    url:"./game.html",
+                    icon:"./icon.jpg",
+                    isShowLoadNum:1,
+                    loadingInterval:250
+                }; 
+                window.isUploadCY = !1;
+                document.title = (gGame.name).replace(new RegExp("_","gi")," ")
+                var purl = window.location.href;
+                if(purl.indexOf("192.168") > -1 || purl.indexOf("127.0") > -1)
+                {
+                    window["new_afg_isTest"] = true;
+                }else
+                {
+                    window["new_afg_isTest"] = false;
+                }
+
+
+        </script>
     </head>
     <body>
         <div id="loadingMc" class="loadingMc">
@@ -42,8 +51,12 @@
                 style="display:block;overflow:hidden;"
             ></iframe>
         </div>
-       <div id="ad-banner" style ="bottom: 0; height: 8%;"> 
-           
+        <div id="game_banner" style ="bottom: 0; height: 8%;">
+            <ins class="adsbygoogle" style="display:inline-block;width:100%; margin-top: 5px"
+            data-ad-client= "ca-pub-1394526330842049" data-ad-slot="2848231678"></ins>
+            <script type="text/javascript">
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
         <script>
         window.isUploadCY = !1;
@@ -53,14 +66,7 @@
            
                 const div_gameIframeEl = document.getElementById('iframe_game');
  
-
                 div_gameIframeEl.style.height = "92%";
-
-                if(!gGame.isBanner){
-                    div_gameIframeEl.style.height = "100%";
-                    const adBanner = document.getElementById("ad-banner");
-                    adBanner.style = "display:none";
-                }
 
                 div_gameIframeEl.src = gGame.url;
             }
@@ -78,7 +84,6 @@
                 loadingImgEl.setAttribute('src', gGame.icon);
                 loadingImgEl.style.width = "100%";
                 this.show();
-               
             },
             show: function() {
                 const loadingProgerssTxt = document.querySelector('#span');
@@ -87,18 +92,9 @@
                     if(this.loadingProgerss >= 100){
                         clearInterval(this.itervalId);
                         this.hide();
-                        if(!isUploadCY){
-                            console.log("开屏广告");
-                             ads.adBreak && ads.adBreak({
-                                type: "preroll",
-                                name: "my_preroll",
-                                adBreakDone: () => {},// 也不要在这里初始化游戏，因为用户不关闭广告，则游戏无法初始化！！！
-                            });
-                            window.isUploadCY = !0;
-                        }
                     }
                 loadingProgerssTxt.innerHTML = ( Math.trunc(this.loadingProgerss)).toString() + '%'; 
-                }, 80);
+                }, window["new_afg_isTest"]?60:gGame.loadingInterval);
             },
             hide: function () {
                 const loadingContainerEl = document.querySelector('#loadingMc');
@@ -108,36 +104,61 @@
         }
         window.loading.init();
     
-        const jolibox = new JoliboxSDK();
-        const { ads, runtime, storage } = jolibox;
+        window.insertScript = (url, attributes, callback) => {
+            const scriptElement = document.createElement('script'),
+            head = document.head || document.getElementsByTagName('head')[0];
+            scriptElement.async = true;
+    
+        
+            callback = callback || function() {};
+            if (scriptElement.readyState) {
+                scriptElement.onreadystatechange = () => {
+                    if (scriptElement.readyState === 'loaded' || scriptElement.readyState === 'complete') {
+                        scriptElement.onreadystatechange = null;
+                        callback();
+                    }
+                }
+            } else {
+                scriptElement.onload = () => {
+                    callback();
+                };
+            }
+    
+            scriptElement.src = url;
+            if (attributes) {
+                for (let k in attributes) {
+                    if(!window["new_afg_isTest"] ){
 
-                    
-            // 在游戏中初始化广告
-        ads.init();
-
-        // 在需要预加载广告的地方（例如在游戏加载屏幕中）
-        ads.adConfig({
-            preloadAdBreaks: "on",
-            sound: "off",
-            onReady: () => {
-                console.log("onReady");
-            },
-        });
-
-
-      
-        if(gGame.isBanner){
-            const adBanner = document.getElementById("ad-banner");
-            ads.adUnit({
-            el: adBanner,
-            fullWidthResponsive: "true",
-            style: "display:inline-block;width:100%; margin-top: 5px",
-        });
+                       if(k ==  "data-adbreak-test"){
+                            continue;
+                       }
+                    }
+                    scriptElement.setAttribute(k, attributes[k]);
+           
+                }
+            }
+            head?.appendChild(scriptElement);
+            console.log('load js: ', url);
+            return scriptElement;
         }
-     
-
-        window.h5_sdk = {
+    
        
+        window.h5_sdk = {
+            sdk_url: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
+            init: function (callback) {
+                window.insertScript(this.sdk_url,
+                {
+                    "data-ad-client":gGame.data_ad_client,
+                    "crossorigin":"anonymous",
+                    "data-ad-frequency-hint":"30s",
+                    "data-adbreak-test":"on"
+
+                }, () => {
+                    window.adsbygoogle = window.adsbygoogle || []; 
+                    window.adBreak = window.adConfig = function(o) {adsbygoogle.push(o);} 
+                    window.adConfig({preloadAdBreaks: 'on'});
+                });
+            },
             adIntervalTime: 45,
             adShowTime: (new Date()).getTime(),
             
@@ -173,10 +194,14 @@
                 let  lastShowAdTime = ((new Date()).getTime() - this.adShowTime) / 1000;
                 console.log(lastShowAdTime);
                 if (lastShowAdTime > this.adIntervalTime) {
-                   
-                    console.log('==== h5_sdk showInterstitialAd ====');
+                    if(!window.adBreak){
+                        window.adsbygoogle = window.adsbygoogle || []; 
+                        window.adBreak = window.adConfig = function(o) {adsbygoogle.push(o);} 
+                        window.adConfig({preloadAdBreaks: 'on'});
+                    }   
+                    window.adBreak && console.log('==== h5_sdk showInterstitialAd ====');
                     this.adShowTime = (new Date()).getTime();
-                    ads.adBreak && ads.adBreak({
+                    window.adBreak && window.adBreak({
                         type: "next",
                         name: "next",
                         adBreakDone: () => {
@@ -193,42 +218,41 @@
              * @param {*} failed
              */
             showRewardAd: function (success, failed) {  
-                console.log('==== h5_sdk showRewardAd ====');
-                ads.adBreak({
-                    type: "reward",
-                    beforeReward(showAdFn) {
-                        // 处理广告播放前的逻辑，例如暂停游戏
-                        console.log("beforeReward");
-                        showAdFn();
-                    },
-                    adDismissed: () => {
-                        // 被告知广告已被用户关闭，并且没有达到奖励条件
-                        console.log("adDismissed");
-                        failed && failed();
-                    },
-                    adViewed: () => {
-                        // 被告知广告已被用户观看，并且达到奖励条件
-                        console.log("adViewed");
-                        success && success();
-                    },
-                    adBreakDone: (placementInfo) => {
-                        // 处理剩余逻辑，是否发放奖励，并恢复游戏状态
-                        console.log("adBreakDone", placementInfo);
-                        if (placementInfo.breakStatus !== "viewed") {
+                if(!window.adBreak){
+                    window.adsbygoogle = window.adsbygoogle || []; 
+                    window.adBreak = window.adConfig = function(o) {adsbygoogle.push(o);} 
+                    window.adConfig({preloadAdBreaks: 'on'});
+                }          
+                window.adBreak && console.log('==== h5_sdk showRewardAd ====');
+                    window.adBreak &&   window.adBreak({
+                        type: "reward",
+                        name: "reward",
+                        beforeReward: (showAdFn) => {
+                            showAdFn();
+                        },
+                        adViewed: () => {
+                            success && success();
+                        },
+                        adDismissed: () => {
+                            failed && failed();
+                        },
+                        adBreakDone: (placementInfo) => {
+                            if (placementInfo.breakStatus !== "viewed") {
                                 failed && failed();
-                        }
-                    },
-                });
+                            }
+                        },
+                }); 
+                
+                !window.adBreak&&failed && failed();
             },
        
             showGameLoadingCompleted: function () {
              window.loading.hide();
-             runtime.loadFinished();
              if (!window.isUploadCY)
                 try {
                     console.log("----uploadCYLoadComplete----");
                     window.isUploadCY = !0;
-                    ads.adBreak({
+                    window.adBreak({
                         type: "preroll",
                         name: "my_preroll",
                         adBreakDone: () => {},// 也不要在这里初始化游戏，因为用户不关闭广告，则游戏无法初始化！！！
@@ -244,8 +268,7 @@
             }
         };
 
-    </script>
-    
-
+        window.h5_sdk.init();
+        </script>
     </body>
 </html>
